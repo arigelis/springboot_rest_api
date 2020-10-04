@@ -40,13 +40,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //выклчаем кроссдоменную секьюрность (на этапе обучения неважна)
                 .and().csrf().disable();
 
+//        http
+//                .authorizeRequests().antMatchers("/login").anonymous()
+//                .antMatchers("/hello").access("hasAnyRole('user')")
+//                .antMatchers("/admin/", "/admin").access("hasAuthority('admin')")
+//                .antMatchers("/home/", "/home").access("hasAuthority('test')")
+////                .antMatchers("/new_user/", "/new_user").access("hasAuthority('admin')")
+//                .antMatchers("/edit_user/", "/edit_user").access("hasAuthority('admin')").anyRequest().authenticated();
+
         http
-                .authorizeRequests().antMatchers("/login").anonymous()
-                .antMatchers("/hello").access("hasAnyRole('user')")
-                .antMatchers("/admin/", "/admin").access("hasAuthority('admin')")
-                .antMatchers("/home/", "/home").access("hasAuthority('test')")
-//                .antMatchers("/new_user/", "/new_user").access("hasAuthority('admin')")
-                .antMatchers("/edit_user/", "/edit_user").access("hasAuthority('admin')").anyRequest().authenticated();
+                // делаем страницу регистрации недоступной для авторизированных пользователей
+                .authorizeRequests()
+                //страницы аутентификаци доступна всем
+                .antMatchers("/login")
+                .anonymous()
+                // защищенные URL
+                .antMatchers("/users/**", "/users/").access("hasAuthority('admin')")
+                .antMatchers("/user", "/user/").access("hasAnyAuthority('user','admin')")
+                .anyRequest()
+                .authenticated();
 
     }
 

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous">
+    <title>Admin panel</title>
+</head>
+<body class="h-100">
+<header id="navbar">
+</header>
+<main class="h-100">
+    <div class="container-fluid p-0 h-100">
+        <div class="row m-0 h-100">
+            <div class="col-2 p-0 h-100">
+                <div class="list-group list-group-flush mt-3" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-admin-list"
+                       data-toggle="list" href="#list-admin" role="tab" aria-controls="home">Admin</a>
+                    <a class="list-group-item list-group-item-action" id="list-user-list"
+                       data-toggle="list" href="#list-user" role="tab" aria-controls="profile">User</a>
+                </div>
+            </div>
+            <div class="col-10 bg-light p-0">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-admin"
+                         role="tabpanel" aria-labelledby="list-admin-list">
+                        <div class="col p-0">
+                            <div class="mt-3 pl-4">
+                                <p class="h2">Admin panel</p>
+                                <ul class="nav nav-tabs mr-4" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                           aria-controls="home" aria-selected="true">Users</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                           aria-controls="profile" aria-selected="false">New user</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active pr-4" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="card">
+                                            <h5 class="card-header">All users</h5>
+                                            <div class="card-body">
+                                                <table class="table table-striped bg-white p-5" id="all-users">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Name</th>
+                                                        <!--<th scope="col">Last Name</th>-->
+                                                        <!--<th scope="col">Age</th>-->
+                                                        <!--<th scope="col">Email</th>-->
+                                                        <th scope="col">Role</th>
+                                                        <th scope="col">Edit</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                    </thead>             
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade pr-4" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="card">
+                                            <h5 class="card-header">Add new user</h5>
+                                            <div class="card-body text-center">
+                                                <div class="form justify-content-center mx-auto col-md-3" id="new-user">
+                                                    <!--подстановка из js - новый пользователь-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list-user"
+                         role="tabpanel" aria-labelledby="list-user-list">
+                        <div class="mt-3 pl-4 pr-4 bg-light">
+                            <p class="h2 mt-1">User page</p>
+                            <div class="card">
+                                <h5 class="card-header">About</h5>
+                                <div class="card-body">
+                                    <div class="table bg-white">
+                                        <table class="table table-striped bg-white p-5" id="principal-info">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Name</th>
+                                                <!--<th scope="col">Last Name</th>-->
+                                                <!--<th scope="col">Age</th>-->
+                                                <!--<th scope="col">Email</th>-->
+                                                <th scope="col">Role</th>
+                                            </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit-->
+    <div class="modal fade" id="staticBackdropEdit" data-backdrop="static"
+         data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabelEdit"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabelEdit">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-md-center">
+                        <form class="col-6 text-center" id="editForm">
+                            <div class="row">
+                                <div class="col">
+                                    <fieldset disabled>
+                                        <div class="form-group">
+                                            <label for="disabledTextInput"><strong>Id</strong></label>
+                                            <input type="text" id="disabledTextInput" class="form-control">
+                                        </div>
+                                    </fieldset>
+                                    <div class="form-group">
+                                        <label><strong>Name</strong></label>
+                                        <input type="text" class="form-control" id="editName">
+                                    </div>
+                                    <!--<div class="form-group">-->
+                                        <!--<label><strong>Last name</strong></label>-->
+                                        <!--<input type="text" class="form-control" id="editLastName">-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label><strong>Age</strong></label>-->
+                                        <!--<input type="text" class="form-control" id="editAge">-->
+                                    <!--</div>-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label><strong>Email</strong></label>-->
+                                        <!--<input type="text" class="form-control" id="editUserName">-->
+                                    <!--</div>-->
+                                    <div class="form-group">
+                                        <label><strong>Password</strong></label>
+                                        <input type="password" class="form-control" plaplaceholder="Password"
+                                               id="editPassword" name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelectEdit"><strong>Role</strong></label>
+                                        <select multiple class="form-control" id="exampleFormControlSelectEdit" size="2"
+                                                name="editRoles">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-btn="submitEdit">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Delete-->
+    <div class="modal fade" id="staticBackdropDelete" data-backdrop="static"
+         data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabelDelete"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabelDelete">Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-md-center">
+                        <form class="col-6 text-center">
+                            <div class="row">
+                                <div class="col">
+                                    <fieldset disabled>
+                                        <div class="form-group">
+                                            <label for="disabledTextInputDelete"><strong>Id</strong></label>
+                                            <input type="text" id="disabledTextInputDelete" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Name</strong></label>
+                                            <input type="text" class="form-control" id="deleteName">
+                                        </div>
+                                        <!--<div class="form-group">-->
+                                            <!--<label><strong>Last name</strong></label>-->
+                                            <!--<input type="text" class="form-control" id="deleteLastName">-->
+                                        <!--</div>-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label><strong>Age</strong></label>-->
+                                            <!--<input type="text" class="form-control" id="deleteAge">-->
+                                        <!--</div>-->
+                                        <!--<div class="form-group">-->
+                                            <!--<label><strong>Username</strong></label>-->
+                                            <!--<input type="text" class="form-control" id="deleteUsername">-->
+                                        <!--</div>-->
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelectDelete"><strong>Role</strong></label>
+                                            <select multiple class="form-control" id="exampleFormControlSelectDelete" size="2">
+                                            </select>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger" data-btn="submitDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+<script src="/allusers.js"></script>
+<script src="/getallroles.js"></script>
+<script src="/adduser.js"></script>
+</body>
+</html>

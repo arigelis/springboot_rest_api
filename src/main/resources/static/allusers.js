@@ -1,15 +1,15 @@
 function printPrincipal() {
-    fetch('/root/user')
+    fetch('/api/v.1.0/user')
         .then(response => response.json())
         .then(principal => {
             let navbar = document.querySelector("#navbar");
             let roles = '';
             for (let key in principal.roles) {
-                roles += `${principal.roles[key].role} `
+                roles += `${principal.roles[key].name} `
             }
             navbar.innerHTML += `
                 <nav class="navbar navbar-dark bg-dark">
-                <strong><a class="navbar-brand" href="/users" data-btn="home">${principal.name}</a></strong>
+                <strong><a class="navbar-brand" href="/users" data-btn="home">${principal.username}</a></strong>
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <span class="navbar-text" style="color: white">
@@ -23,19 +23,22 @@ function printPrincipal() {
         });
 }
 function printPrincipalInfo() {
-    fetch('/root/user')
+    fetch('/api/v.1.0/user')
         .then(response => response.json())
         .then(principal => {
             let principal_info = document.querySelector("#principal-info");
             let roles = '';
             for (let key in principal.roles) {
-                roles += `${principal.roles[key].role} `
+                roles += `${principal.roles[key].name} `
             }
             principal_info.innerHTML += `
         <tbody>
             <tr>
             <th scope="row">${principal.id}</th>
-            <td>${principal.name}</td>
+            <td>${principal.firstName}</td>
+            <td>${principal.lastName}</td>
+            <td>${principal.age}</td>
+            <td>${principal.username}</td>
             <td>${roles}</td>
             </td>
             </tr>
@@ -46,11 +49,11 @@ function printPrincipalInfo() {
 
 function translate(array) {
     let result = [];
-    if (array.indexOf("user") >= 0 ) {
-        result.push({"id": 1, "name": "user"});
+    if (array.indexOf("USER") >= 0 ) {
+        result.push({"id": 1, "name": "USER"});
     }
-    if (array.indexOf("admin") >= 0 ) {
-        result.push({"id": 2, "name" : "admin"});
+    if (array.indexOf("ADMIN") >= 0 ) {
+        result.push({"id": 2, "name" : "ADMIN"});
     }
     return result;
 }
@@ -68,22 +71,25 @@ function getAllOptions(select) {
     return result;
 }
 function getAllUsers() {
-    fetch('/root/roles')
+    fetch('/api/v.1.0/roles')
         .then(response => response.json())
         .then(allRoles => {
-            fetch('/root/users')
+            fetch('/api/v.1.0/users')
                 .then(response => response.json())
                 .then(printUsers => {
                     let output = '';
                     printUsers.forEach(function (user) {
                         let roles = '';
                         for (let key in user.roles) {
-                            roles += `${user.roles[key].role} `
+                            roles += `${user.roles[key].name} `
                         }
                         output += `
                 <tr>
                 <td>${user.id}</td>
-                <td>${user.name}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.age}</td>
+                <td>${user.username}</td>
                 <td>${roles}</td>                           
                 <td>
                     <form id="editForm">
@@ -115,19 +121,25 @@ document.addEventListener('click', event => {
 
     if (btnType === 'edit') {
         const id = event.target.dataset.id;
-        const url = '/root/users/'+ id;
+        const url = '/api/v.1.0/users/'+ id;
         fetch(url)
             .then(response => response.json())
             .then(data => {
                 document.querySelector("#disabledTextInput").value = data.id;
-                document.querySelector("#editName").value = data.name;
+                document.querySelector("#editFirstName").value = data.firstName;
+                document.querySelector("#editLastName").value = data.lastName;
+                document.querySelector("#editAge").value = data.age;
+                document.querySelector("#editUserName").value = data.username;
                 document.querySelector("#editPassword").value = ""});
     }
     if (btnType === 'submitEdit') {
-        let url = 'http://localhost:8080/root/users';
+        let url = 'http://localhost:8080/api/v.1.0/users';
         let user = {
             id: document.querySelector("#disabledTextInput").value,
-            name: document.querySelector("#editName").value,
+            firstName: document.querySelector("#editFirstName").value,
+            lastName: document.querySelector("#editLastName").value,
+            age: document.querySelector("#editAge").value,
+            username: document.querySelector("#editUserName").value,
             password: document.querySelector("#editPassword").value,
             roles: translate(getAllOptions(document.querySelector("#exampleFormControlSelectEdit")))
         }
@@ -153,27 +165,30 @@ document.addEventListener('click', event => {
     }
     if (btnType === 'delete') {
         const id = event.target.dataset.id;
-        const url = '/root/users/'+ id;
+        const url = '/api/v.1.0/users/'+ id;
         fetch(url)
             .then(response => response.json())
             .then(data => {
                 document.querySelector("#disabledTextInputDelete").value = data.id;
-                document.querySelector("#deleteFirstName").value = data.name;
+                document.querySelector("#deleteFirstName").value = data.firstName;
+                document.querySelector("#deleteLastName").value = data.lastName;
+                document.querySelector("#deleteAge").value = data.age;
+                document.querySelector("#deleteUsername").value = data.username;
                 let block = '';
                 if (data.roles.length > 1) {
                     block += `
-                    <option>${data.roles[0].role}</option>
-                    <option>${data.roles[1].role}</option>`
+                    <option>${data.roles[0].name}</option>
+                    <option>${data.roles[1].name}</option>`
                     document.querySelector("#exampleFormControlSelectDelete").innerHTML = block;
                 } else {
-                    block += `<option>${data.roles[0].role}</option>`
+                    block += `<option>${data.roles[0].name}</option>`
                 }
                 document.querySelector("#exampleFormControlSelectDelete").innerHTML = block;
                 });
     }
     if (btnType === 'submitDelete') {
         let id = document.querySelector("#disabledTextInputDelete").value;
-        let url = 'http://localhost:8080/root/users/'+id;
+        let url = 'http://localhost:8080/api/v.1.0/users/'+id;
         fetch(url, {
             method: 'DELETE',
             headers: {

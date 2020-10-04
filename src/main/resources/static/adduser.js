@@ -1,5 +1,5 @@
 async function printFormAddUser() {
-    let response = await fetch('/root/roles');
+    let response = await fetch('/api/v.1.0/roles');
     let roles = await response.json();
 
 
@@ -8,7 +8,19 @@ async function printFormAddUser() {
     <form name="addForm" id="addForm">
         <div class="form-group">
             <label><strong>First name</strong></label>
-            <input type="text" class="form-control" placeholder="Name" name="name">
+            <input type="text" class="form-control" placeholder="First name" name="firstName">
+        </div>
+        <div class="form-group">
+            <label><strong>Last name</strong></label>
+            <input type="text" class="form-control" placeholder="Last name" name="lastName">
+        </div>
+        <div class="form-group">
+            <label><strong>Age</strong></label>
+            <input type="text" class="form-control" placeholder="Age" name="age">
+        </div>
+        <div class="form-group">
+            <label><strong>Email</strong></label>
+            <input type="text" class="form-control" placeholder="Email address" name="username">
         </div>
         <div class="form-group">
             <label><strong>Password</strong></label>
@@ -18,11 +30,11 @@ async function printFormAddUser() {
             <label for="exampleFormControlSelect"><strong>Role</strong></label>
             <select multiple class="form-control" id="exampleFormControlSelect" size="2"
                 id="rols" name="userRoles">
-                <option selected="selected">${roles[0].role}</option>
-                <option>${roles[1].role}</option>
+                <option selected="selected">${roles[0].name}</option>
+                <option>${roles[1].name}</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-success" id="buttonAdd">New user</button>
+        <button type="submit" class="btn btn-success" id="buttonAdd">Add new user</button>
     </form>`
 
 
@@ -44,11 +56,11 @@ function getAllOptions(select) {
 }
 function translate(array) {
     let result = [];
-    if (array.indexOf("user") >= 0 ) {
-        result.push({"id": 1, "role": "user"});
+    if (array.indexOf("USER") >= 0 ) {
+        result.push({"id": 1, "name": "USER"});
     }
-    if (array.indexOf("admin") >= 0 ) {
-        result.push({"id": 2, "role" : "admin"});
+    if (array.indexOf("ADMIN") >= 0 ) {
+        result.push({"id": 2, "name" : "ADMIN"});
     }
     return result;
 }
@@ -64,7 +76,7 @@ function addNewUser(e) {
         roles: translate(getAllOptions(document.addForm.userRoles))
     }
 
-    fetch('http://localhost:8182/root/users', {
+    fetch('http://localhost:8080/api/v.1.0/users', {
         method: 'POST',
         headers: {
             'Accept': 'application/json, text/plain, */*',

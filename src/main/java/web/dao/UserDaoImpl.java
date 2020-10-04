@@ -47,7 +47,7 @@ public class UserDaoImpl implements UserDao {
     @SuppressWarnings("unchecked")
     @Transactional
     public User getUserByName(String name) {
-        User userByName = entityManager.createQuery("from User where name = :name",User.class).setParameter("name", name).getSingleResult();
+        User userByName = entityManager.createQuery("from User where firstName = :name",User.class).setParameter("name", name).getSingleResult();
         return userByName;
     }
 }

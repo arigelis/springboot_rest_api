@@ -3,54 +3,45 @@ package web.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "roles_sec")
-public class Role implements GrantedAuthority, Serializable {
+@Table(name = "roles")
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Integer id;
-    @Column(name = "role_name")
-    private String role;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.DETACH,  CascadeType.REFRESH})
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    private long id;
+    private String name;
+    @Transient
+    @ManyToMany(mappedBy = "roles")
     private Set<User> users;
-
 
     public Role() {
     }
 
-    public Role(String[] a) {
-        System.out.println(a);
-    }
-
-    public Role(Integer id, String role) {
+    public Role(long id) {
         this.id = id;
-        this.role = role;
     }
 
-    public Integer getId() {
+    public Role(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<User> getUsers() {
@@ -63,14 +54,6 @@ public class Role implements GrantedAuthority, Serializable {
 
     @Override
     public String getAuthority() {
-        return role;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", role='" + role + '\'' +
-                '}';
+        return getName();
     }
 }

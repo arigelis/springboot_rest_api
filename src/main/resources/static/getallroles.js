@@ -1,5 +1,5 @@
 function getAllRoles() {
-    fetch('/api/v.1.0/roles')
+    fetch('/root/roles')
         .then((response) => response.json())
         .then((roles) => {
             let output = '';

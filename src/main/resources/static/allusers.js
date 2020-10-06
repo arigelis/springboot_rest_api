@@ -1,5 +1,5 @@
 function printPrincipal() {
-    fetch('/api/v.1.0/user')
+    fetch('/root/user')
         .then(response => response.json())
         .then(principal => {
             let navbar = document.querySelector("#navbar");
@@ -23,7 +23,7 @@ function printPrincipal() {
         });
 }
 function printPrincipalInfo() {
-    fetch('/api/v.1.0/user')
+    fetch('/root/user')
         .then(response => response.json())
         .then(principal => {
             let principal_info = document.querySelector("#principal-info");
@@ -71,10 +71,10 @@ function getAllOptions(select) {
     return result;
 }
 function getAllUsers() {
-    fetch('/api/v.1.0/roles')
+    fetch('/root/roles')
         .then(response => response.json())
         .then(allRoles => {
-            fetch('/api/v.1.0/users')
+            fetch('/root/users')
                 .then(response => response.json())
                 .then(printUsers => {
                     let output = '';
@@ -121,7 +121,7 @@ document.addEventListener('click', event => {
 
     if (btnType === 'edit') {
         const id = event.target.dataset.id;
-        const url = '/api/v.1.0/users/'+ id;
+        const url = '/root/users/'+ id;
         fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -133,7 +133,7 @@ document.addEventListener('click', event => {
                 document.querySelector("#editPassword").value = ""});
     }
     if (btnType === 'submitEdit') {
-        let url = 'http://localhost:8080/api/v.1.0/users';
+        let url = 'http://localhost:8182/root/users';
         let user = {
             id: document.querySelector("#disabledTextInput").value,
             firstName: document.querySelector("#editFirstName").value,
@@ -165,7 +165,7 @@ document.addEventListener('click', event => {
     }
     if (btnType === 'delete') {
         const id = event.target.dataset.id;
-        const url = '/api/v.1.0/users/'+ id;
+        const url = '/root/users/'+ id;
         fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -188,7 +188,7 @@ document.addEventListener('click', event => {
     }
     if (btnType === 'submitDelete') {
         let id = document.querySelector("#disabledTextInputDelete").value;
-        let url = 'http://localhost:8080/api/v.1.0/users/'+id;
+        let url = 'http://localhost:8182/root/users/'+id;
         fetch(url, {
             method: 'DELETE',
             headers: {

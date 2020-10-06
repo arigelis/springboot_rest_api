@@ -1,5 +1,5 @@
 async function printFormAddUser() {
-    let response = await fetch('/api/v.1.0/roles');
+    let response = await fetch('/root/roles');
     let roles = await response.json();
 
 
@@ -76,7 +76,7 @@ function addNewUser(e) {
         roles: translate(getAllOptions(document.addForm.userRoles))
     }
 
-    fetch('http://localhost:8080/api/v.1.0/users', {
+    fetch('http://localhost:8182/root/users', {
         method: 'POST',
         headers: {
             'Accept': 'application/json, text/plain, */*',

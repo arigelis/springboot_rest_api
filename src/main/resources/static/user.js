@@ -1,5 +1,5 @@
 async function printPrincipal() {
-    let response = await fetch('/api/v.1.0/user');
+    let response = await fetch('/root/user');
     let principal = await response.json();
 
     let navbar = document.querySelector("#navbar");
@@ -23,7 +23,7 @@ async function printPrincipal() {
 }
 
 async function printPrincipalInfo() {
-    let response = await fetch('/api/v.1.0/user');
+    let response = await fetch('/root/user');
     let principal = await response.json();
 
     let principal_info = document.querySelector("#principal-info");

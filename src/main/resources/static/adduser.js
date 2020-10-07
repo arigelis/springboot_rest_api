@@ -56,11 +56,11 @@ function getAllOptions(select) {
 }
 function translate(array) {
     let result = [];
-    if (array.indexOf("USER") >= 0 ) {
-        result.push({"id": 1, "name": "USER"});
+    if (array.indexOf("user") >= 0 ) {
+        result.push({"id": 1, "name": "user"});
     }
-    if (array.indexOf("ADMIN") >= 0 ) {
-        result.push({"id": 2, "name" : "ADMIN"});
+    if (array.indexOf("admin") >= 0 ) {
+        result.push({"id": 2, "name" : "admin"});
     }
     return result;
 }

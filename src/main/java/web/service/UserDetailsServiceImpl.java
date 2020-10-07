@@ -2,8 +2,8 @@ package web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import web.dao.RoleDao;
 import web.dao.UserDao;
@@ -21,13 +21,13 @@ public class UserDetailsServiceImpl implements UserService {
     @Autowired
     private RoleDao roleDao;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public UserDetailsServiceImpl(UserDao userDao) {
         this.userDAO = userDao;
     }
 
-    // «Пользователь» – это просто Object. В большинстве случаев он может быть
-    //  приведен к классу UserDetails.
-    // Для создания UserDetails используется интерфейс UserDetailsService, с единственным методом:
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return userDAO.getUserByName(s);
@@ -43,6 +43,7 @@ public class UserDetailsServiceImpl implements UserService {
     @Override
     @Transactional
     public void add(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDAO.add(user);
     }
 

@@ -19,10 +19,6 @@ async function printFormAddUser() {
             <input type="text" class="form-control" placeholder="Age" name="age">
         </div>
         <div class="form-group">
-            <label><strong>Email</strong></label>
-            <input type="text" class="form-control" placeholder="Email address" name="username">
-        </div>
-        <div class="form-group">
             <label><strong>Password</strong></label>
             <input type="password" class="form-control" placeholder="Password" name="password">
         </div>
@@ -56,12 +52,13 @@ function getAllOptions(select) {
 }
 function translate(array) {
     let result = [];
-    if (array.indexOf("user") >= 0 ) {
-        result.push({"id": 1, "name": "user"});
-    }
     if (array.indexOf("admin") >= 0 ) {
-        result.push({"id": 2, "name" : "admin"});
+        result.push({"id": 1, "name" : "admin"});
     }
+    if (array.indexOf("user") >= 0 ) {
+        result.push({"id": 2, "name": "user"});
+    }
+
     return result;
 }
 

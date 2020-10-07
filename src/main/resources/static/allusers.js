@@ -1,9 +1,7 @@
 function printPrincipal() {
     fetch('/root/user')
-        .then(response = > response.json()
-)
-.
-    then(principal = > {
+        .then(response => response.json())
+.then(principal => {
         let navbar = document.querySelector("#navbar");
     let roles = '';
     for (let key in principal.roles) {
@@ -22,16 +20,12 @@ function printPrincipal() {
                 <span class="navbar-text"><a href="/logout" style="color: #808080; text-decoration: none" data-btn="logout">Logout</a></span>
                 </nav>
                 `
-})
-    ;
+});
 }
-
 function printPrincipalInfo() {
     fetch('/root/user')
-        .then(response = > response.json()
-)
-.
-    then(principal = > {
+        .then(response => response.json())
+.then(principal => {
         let principal_info = document.querySelector("#principal-info");
     let roles = '';
     for (let key in principal.roles) {
@@ -50,27 +44,26 @@ function printPrincipalInfo() {
             </tr>
         </tbody>
         `
-})
-    ;
+});
 }
 
 function translate(array) {
     let result = [];
-    if (array.indexOf("user") >= 0) {
-        result.push({"id": 1, "name": "user"});
+
+    if (array.indexOf("admin") >= 0 ) {
+        result.push({"id": 1, "name" : "admin"});
     }
-    if (array.indexOf("admin") >= 0) {
-        result.push({"id": 2, "name": "admin"});
+    if (array.indexOf("user") >= 0 ) {
+        result.push({"id": 2, "name": "user"});
     }
     return result;
 }
-
 function getAllOptions(select) {
     let result = [];
     let options = select && select.options;
     let opt;
 
-    for (let i = 0, iLen = options.length; i < iLen; i++) {
+    for (let i=0, iLen = options.length; i < iLen; i++) {
         opt = options[i];
         if (opt.selected) {
             result.push(opt.value || opt.text);
@@ -78,20 +71,13 @@ function getAllOptions(select) {
     }
     return result;
 }
-
 function getAllUsers() {
     fetch('/root/roles')
-        .then(response = > response.json()
-)
-.
-    then(allRoles = > {
-        fetch('/root/users'
-)
-.
-    then(response = > response.json()
-)
-.
-    then(printUsers = > {
+        .then(response => response.json())
+.then(allRoles => {
+        fetch('/root/users')
+.then(response => response.json())
+.then(printUsers => {
         let output = '';
     printUsers.forEach(function (user) {
         let roles = '';
@@ -130,26 +116,22 @@ function getAllUsers() {
 
 }
 
-document.addEventListener('click', event = > {
+document.addEventListener('click', event => {
     event.preventDefault();
 const btnType = event.target.dataset.btn;
 
 if (btnType === 'edit') {
     const id = event.target.dataset.id;
-    const url = '/root/users/' + id;
+    const url = '/root/users/'+ id;
     fetch(url)
-        .then(response = > response.json()
-)
-.
-    then(data = > {
+        .then(response => response.json())
+.then(data => {
         document.querySelector("#disabledTextInput").value = data.id;
     document.querySelector("#editFirstName").value = data.firstName;
     document.querySelector("#editLastName").value = data.lastName;
     document.querySelector("#editAge").value = data.age;
     document.querySelector("#editUserName").value = data.username;
-    document.querySelector("#editPassword").value = ""
-})
-    ;
+    document.querySelector("#editPassword").value = ""});
 }
 if (btnType === 'submitEdit') {
     let url = 'http://localhost:8182/root/users';
@@ -170,27 +152,24 @@ if (btnType === 'submitEdit') {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
-    }).then(function (response) {
+    }).then(function(response) {
         if (!response.ok) {
             return Promise.reject(new Error(
                 'Response failed: ' + response.status + ' (' + response.statusText + ')'
             ));
         }
         return response.json();
-    }).finally(() = > {
+    }).finally(() => {
         getAllUsers();
     $('.modal').modal('hide');
-})
-    ;
+});
 }
 if (btnType === 'delete') {
     const id = event.target.dataset.id;
-    const url = '/root/users/' + id;
+    const url = '/root/users/'+ id;
     fetch(url)
-        .then(response = > response.json()
-)
-.
-    then(data = > {
+        .then(response => response.json())
+.then(data => {
         document.querySelector("#disabledTextInputDelete").value = data.id;
     document.querySelector("#deleteFirstName").value = data.firstName;
     document.querySelector("#deleteLastName").value = data.lastName;
@@ -206,30 +185,28 @@ if (btnType === 'delete') {
         block += `<option>${data.roles[0].name}</option>`
     }
     document.querySelector("#exampleFormControlSelectDelete").innerHTML = block;
-})
-    ;
+});
 }
 if (btnType === 'submitDelete') {
     let id = document.querySelector("#disabledTextInputDelete").value;
-    let url = 'http://localhost:8182/root/users/' + id;
+    let url = 'http://localhost:8182/root/users/'+id;
     fetch(url, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
         },
-    }).then(function (response) {
+    }).then(function(response) {
         if (!response.ok) {
             return Promise.reject(new Error(
                 'Response failed: ' + response.status + ' (' + response.statusText + ')'
             ));
         }
         return response.json();
-    }).finally(() = > {
+    }).finally(() => {
         getAllUsers();
     $('.modal').modal('hide');
-})
-    ;
+});
 
 }
 if (btnType === 'logout') {

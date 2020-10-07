@@ -31,21 +31,25 @@ public class RootController {
     @PostMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         if (user == null) {
-            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         userService.add(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PutMapping (value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "users", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> updateUser(@RequestBody @Validated User user) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        if (user.getPassword().isEmpty()) {//Если пароль не редактировался - восстановим из базы.
+            user.setPassword(userService.getById(user.getId()).getPassword());
+        }
         userService.edit(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @DeleteMapping(value ="users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @DeleteMapping(value = "users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> deleteUser(@PathVariable("id") Long id) {
         if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -64,12 +68,14 @@ public class RootController {
 
         return users;
     }
+
     @GetMapping(value = "users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public User getUser(@PathVariable("id") Long id) {
         User user = userService.getById(id);
 
         return user;
     }
+
     @GetMapping(value = "roles")
     public List<Role> getRoles() {
         List<Role> roles = roleDao.allRoles();

@@ -19,6 +19,10 @@ async function printFormAddUser() {
             <input type="text" class="form-control" placeholder="Age" name="age">
         </div>
         <div class="form-group">
+            <label><strong>Email</strong></label>
+            <input type="text" class="form-control" placeholder="Email address" name="username">
+        </div>
+        <div class="form-group">
             <label><strong>Password</strong></label>
             <input type="password" class="form-control" placeholder="Password" name="password">
         </div>
@@ -37,64 +41,64 @@ async function printFormAddUser() {
 
 
 
-function getAllOptions(select) {
-    let result = [];
-    let options = select && select.options;
-    let opt;
+    function getAllOptions(select) {
+        let result = [];
+        let options = select && select.options;
+        let opt;
 
-    for (let i=0, iLen = options.length; i < iLen; i++) {
-        opt = options[i];
-        if (opt.selected) {
-            result.push(opt.value || opt.text);
+        for (let i=0, iLen = options.length; i < iLen; i++) {
+            opt = options[i];
+            if (opt.selected) {
+                result.push(opt.value || opt.text);
+            }
         }
+        return result;
     }
-    return result;
-}
-function translate(array) {
-    let result = [];
-    if (array.indexOf("admin") >= 0 ) {
-        result.push({"id": 1, "name" : "admin"});
-    }
-    if (array.indexOf("user") >= 0 ) {
-        result.push({"id": 2, "name": "user"});
-    }
+    function translate(array) {
+        let result = [];
 
-    return result;
-}
-
-function addNewUser(e) {
-    e.preventDefault();
-    let user = {
-        firstName: document.addForm.firstName.value,
-        lastName: document.addForm.lastName.value,
-        age: document.addForm.age.value,
-        username: document.addForm.username.value,
-        password: document.addForm.password.value,
-        roles: translate(getAllOptions(document.addForm.userRoles))
-    }
-
-    fetch('http://localhost:8182/root/users', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-    }).then(function(response) {
-        if (!response.ok) {
-            return Promise.reject(new Error(
-                'Response failed: ' + response.status + ' (' + response.statusText + ')'
-            ));
+        if (array.indexOf("ADMIN") >= 0 ) {
+            result.push({"id": 1, "name" : "ADMIN"});
         }
-        return response.json();
-    }).finally(() => {
-        getAllUsers();
+        if (array.indexOf("USER") >= 0 ) {
+            result.push({"id": 2, "name": "USER"});
+        }
+        return result;
+    }
+
+    function addNewUser(e) {
+        e.preventDefault();
+        let user = {
+            firstName: document.addForm.firstName.value,
+            lastName: document.addForm.lastName.value,
+            age: document.addForm.age.value,
+            username: document.addForm.username.value,
+            password: document.addForm.password.value,
+            roles: translate(getAllOptions(document.addForm.userRoles))
+        }
+
+        fetch('http://localhost:8182/root/users', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then(function(response) {
+            if (!response.ok) {
+                return Promise.reject(new Error(
+                    'Response failed: ' + response.status + ' (' + response.statusText + ')'
+                ));
+            }
+            return response.json();
+        }).finally(() => {
+            getAllUsers();
         document.querySelector("#addForm").reset();
     });
 
-}
+    }
 
-document.querySelector("#buttonAdd").onclick = addNewUser;
+    document.querySelector("#buttonAdd").onclick = addNewUser;
 }
 
 printFormAddUser();

@@ -50,11 +50,11 @@ function printPrincipalInfo() {
 function translate(array) {
     let result = [];
 
-    if (array.indexOf("admin") >= 0 ) {
-        result.push({"id": 1, "name" : "admin"});
+    if (array.indexOf("ADMIN") >= 0 ) {
+        result.push({"id": 1, "name" : "ADMIN"});
     }
-    if (array.indexOf("user") >= 0 ) {
-        result.push({"id": 2, "name": "user"});
+    if (array.indexOf("USER") >= 0 ) {
+        result.push({"id": 2, "name": "USER"});
     }
     return result;
 }
@@ -164,6 +164,7 @@ if (btnType === 'submitEdit') {
     $('.modal').modal('hide');
 });
 }
+
 if (btnType === 'delete') {
     const id = event.target.dataset.id;
     const url = '/root/users/'+ id;

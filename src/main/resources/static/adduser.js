@@ -18,10 +18,10 @@ async function printFormAddUser() {
             <label><strong>Age</strong></label>
             <input type="text" class="form-control" placeholder="Age" name="age">
         </div>
-        <div class="form-group">
-            <label><strong>Email</strong></label>
-            <input type="text" class="form-control" placeholder="Email address" name="username">
-        </div>
+        <!--<div class="form-group">-->
+            <!--<label><strong>Email</strong></label>-->
+            <!--<input type="text" class="form-control" placeholder="Email address" name="username">-->
+        <!--</div>-->
         <div class="form-group">
             <label><strong>Password</strong></label>
             <input type="password" class="form-control" placeholder="Password" name="password">

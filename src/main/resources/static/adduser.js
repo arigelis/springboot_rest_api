@@ -1,10 +1,6 @@
-async
-
-function printFormAddUser() {
-    let response = await
-    fetch('/root/roles');
-    let roles = await
-    response.json();
+async function printFormAddUser() {
+    let response = await fetch('/root/roles');
+    let roles = await response.json();
 
 
     let add_user = document.querySelector("#new-user")
@@ -34,7 +30,7 @@ function printFormAddUser() {
             <label for="exampleFormControlSelect"><strong>Role</strong></label>
             <select multiple class="form-control" id="exampleFormControlSelect" size="2"
                 id="rols" name="userRoles">
-                <option>${roles[0].name}</option>
+                <option selected="selected">${roles[0].name}</option>
                 <option>${roles[1].name}</option>
             </select>
         </div>
@@ -42,12 +38,15 @@ function printFormAddUser() {
     </form>`
 
 
+
+
+
     function getAllOptions(select) {
         let result = [];
         let options = select && select.options;
         let opt;
 
-        for (let i = 0, iLen = options.length; i < iLen; i++) {
+        for (let i=0, iLen = options.length; i < iLen; i++) {
             opt = options[i];
             if (opt.selected) {
                 result.push(opt.value || opt.text);
@@ -55,14 +54,13 @@ function printFormAddUser() {
         }
         return result;
     }
-
     function translate(array) {
         let result = [];
 
-        if (array.indexOf("ADMIN") >= 0) {
-            result.push({"id": 1, "name": "ADMIN"});
+        if (array.indexOf("ADMIN") >= 0 ) {
+            result.push({"id": 1, "name" : "ADMIN"});
         }
-        if (array.indexOf("USER") >= 0) {
+        if (array.indexOf("USER") >= 0 ) {
             result.push({"id": 2, "name": "USER"});
         }
         return result;
@@ -86,18 +84,17 @@ function printFormAddUser() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
-        }).then(function (response) {
+        }).then(function(response) {
             if (!response.ok) {
                 return Promise.reject(new Error(
                     'Response failed: ' + response.status + ' (' + response.statusText + ')'
                 ));
             }
             return response.json();
-        }).finally(() = > {
+        }).finally(() => {
             getAllUsers();
         document.querySelector("#addForm").reset();
-    })
-        ;
+    });
 
     }
 

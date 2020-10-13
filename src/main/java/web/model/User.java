@@ -15,7 +15,7 @@ public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-//    @Column(name = "firstName")
+    //    @Column(name = "firstName")
     private String firstName;
     private String lastName;
     private byte age;
@@ -82,6 +82,10 @@ public class User implements UserDetails, Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
     }
 
     @Override

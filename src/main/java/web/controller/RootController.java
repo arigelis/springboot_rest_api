@@ -33,6 +33,12 @@ public class RootController {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        //добавляем роль USER по умолчанию
+        Role userRole = roleDao.getRoleByName("USER");
+        if (!user.getRoles().contains(userRole)) {
+            user.addRole(userRole);
+        }
+
         userService.add(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }

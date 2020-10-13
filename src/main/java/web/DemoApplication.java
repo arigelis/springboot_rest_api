@@ -10,7 +10,6 @@ import java.util.Collections;
 
 @SpringBootApplication
 @RestController
-//@PropertySource(value = "classpath:application.properties")
 public class DemoApplication {
     private Environment environment;
 
@@ -26,13 +25,4 @@ public class DemoApplication {
         app.run(args);
     }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName(environment.getRequiredProperty("db.driver"));
-//        dataSource.setUrl(environment.getRequiredProperty("db.url"));
-//        dataSource.setUsername(environment.getRequiredProperty("db.username"));
-//        dataSource.setPassword(environment.getRequiredProperty("db.password"));
-//        return dataSource;
-//    }
 }

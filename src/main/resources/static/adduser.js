@@ -1,6 +1,10 @@
-async function printFormAddUser() {
-    let response = await fetch('/root/roles');
-    let roles = await response.json();
+async
+
+function printFormAddUser() {
+    let response = await
+    fetch('/root/roles');
+    let roles = await
+    response.json();
 
 
     let add_user = document.querySelector("#new-user")
@@ -18,10 +22,10 @@ async function printFormAddUser() {
             <label><strong>Age</strong></label>
             <input type="text" class="form-control" placeholder="Age" name="age">
         </div>
-        <!--<div class="form-group">-->
-            <!--<label><strong>Email</strong></label>-->
-            <!--<input type="text" class="form-control" placeholder="Email address" name="username">-->
-        <!--</div>-->
+        <div class="form-group">
+            <label><strong>Username</strong></label>
+            <input type="text" class="form-control" placeholder="Username" name="username">
+        </div>
         <div class="form-group">
             <label><strong>Password</strong></label>
             <input type="password" class="form-control" placeholder="Password" name="password">
@@ -30,7 +34,7 @@ async function printFormAddUser() {
             <label for="exampleFormControlSelect"><strong>Role</strong></label>
             <select multiple class="form-control" id="exampleFormControlSelect" size="2"
                 id="rols" name="userRoles">
-                <option selected="selected">${roles[0].name}</option>
+                <option>${roles[0].name}</option>
                 <option>${roles[1].name}</option>
             </select>
         </div>
@@ -38,15 +42,12 @@ async function printFormAddUser() {
     </form>`
 
 
-
-
-
     function getAllOptions(select) {
         let result = [];
         let options = select && select.options;
         let opt;
 
-        for (let i=0, iLen = options.length; i < iLen; i++) {
+        for (let i = 0, iLen = options.length; i < iLen; i++) {
             opt = options[i];
             if (opt.selected) {
                 result.push(opt.value || opt.text);
@@ -54,13 +55,14 @@ async function printFormAddUser() {
         }
         return result;
     }
+
     function translate(array) {
         let result = [];
 
-        if (array.indexOf("ADMIN") >= 0 ) {
-            result.push({"id": 1, "name" : "ADMIN"});
+        if (array.indexOf("ADMIN") >= 0) {
+            result.push({"id": 1, "name": "ADMIN"});
         }
-        if (array.indexOf("USER") >= 0 ) {
+        if (array.indexOf("USER") >= 0) {
             result.push({"id": 2, "name": "USER"});
         }
         return result;
@@ -84,17 +86,18 @@ async function printFormAddUser() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
-        }).then(function(response) {
+        }).then(function (response) {
             if (!response.ok) {
                 return Promise.reject(new Error(
                     'Response failed: ' + response.status + ' (' + response.statusText + ')'
                 ));
             }
             return response.json();
-        }).finally(() => {
+        }).finally(() = > {
             getAllUsers();
         document.querySelector("#addForm").reset();
-    });
+    })
+        ;
 
     }
 
